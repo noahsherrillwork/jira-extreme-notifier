@@ -3,30 +3,30 @@ import socket
 import http.client
 import random
 
-class RandomJIRAMonitor:
+class RandomSiteMonitor:
 
-	def isJIRAAvailable(self):
-		jiraCoin = random.randint(0, 1)
-		if jiraCoin == 0:
-			logging.info('JIRA is down')
+	def isSiteAvailable(self):
+		siteCoin = random.randint(0, 1)
+		if siteCoin == 0:
+			logging.info('Site is down')
 			return False
 		else:
-			logging.info('JIRA is up')
+			logging.info('Site is up')
 			return True
 
 
-class JIRAMonitor:
+class SiteMonitor:
 
-	def isJIRAAvailable(self):
+	def isSiteAvailable(self, domain):
 		googleAvailable = self._isSiteAvailable('www.google.com')
-		jiraAvailable = self._isSiteAvailable('issues.liferay.com')
+		siteAvailable = self._isSiteAvailable(domain)
 
-		if jiraAvailable or not googleAvailable:
-			logging.info('JIRA is up')
+		if siteAvailable or not googleAvailable:
+			logging.info('%s is up' % domain)
 			self._recordStatus(True)
 			return True
 		else:
-			logging.info('JIRA is down')
+			logging.info('%s is down' % domain)
 			self._recordStatus(False)
 			return False
 
@@ -45,10 +45,10 @@ class JIRAMonitor:
 
 		return siteAvailable
 
-	def _recordStatus(self, jiraAvailable):
-		with open('jira_status.txt', 'w') as jiraStatusFile:
-			if jiraAvailable:
-				jiraStatusFile.write('true')
+	def _recordStatus(self, siteAvailable):
+		with open('site_status.txt', 'w') as siteStatusFile:
+			if siteAvailable:
+				siteStatusFile.write('true')
 			else:
-				jiraStatusFile.write('false')
+				siteStatusFile.write('false')
 
