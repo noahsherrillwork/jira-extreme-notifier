@@ -23,11 +23,11 @@ class SiteMonitor:
 
 		if siteAvailable or not googleAvailable:
 			logging.info('%s is up' % domain)
-			self._recordStatus(True)
+			self._recordStatus(domain, True)
 			return True
 		else:
 			logging.info('%s is down' % domain)
-			self._recordStatus(False)
+			self._recordStatus(domain, False)
 			return False
 
 	def _isSiteAvailable(self, domain):
@@ -45,8 +45,8 @@ class SiteMonitor:
 
 		return siteAvailable
 
-	def _recordStatus(self, siteAvailable):
-		with open('site_status.txt', 'w') as siteStatusFile:
+	def _recordStatus(self, domain, siteAvailable):
+		with open(domain + '_status.txt', 'w') as siteStatusFile:
 			if siteAvailable:
 				siteStatusFile.write('true')
 			else:

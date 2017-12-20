@@ -6,6 +6,7 @@ import threading
 class LEDNotifier:
 
 	def __init__(self, ledPort):
+		self._ledPort = ledPort
 		self._led = LED(ledPort)
 		self._blink = False
 		self._thread = threading.Thread(target=self._cycleLED)
@@ -25,9 +26,9 @@ class LEDNotifier:
 	def _cycleLED(self):
 		while True:
 			self._led.on()
-			logging.debug('LED turned on')
+			logging.debug('LED at port %d turned on' % self._ledPort)
 			sleep(0.5)
 			if self._blink:
 				self._led.off()
-				logging.debug('LED turned off')
+				logging.debug('LED at port %d turned off' % self._ledPort)
 				sleep(0.5)

@@ -10,8 +10,8 @@ CHECK_INTERVAL_SECONDS = 30
 LED_PORTS = [18, 15]
 
 def _checkServer(domain, ledPort):
-	siteMonitor = SiteMonitor()
 	notifier = LEDNotifier(ledPort)
+	siteMonitor = SiteMonitor()
 
 	while True:
 		if siteMonitor.isSiteAvailable(domain):
